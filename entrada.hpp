@@ -2,6 +2,7 @@
 #define ENTRADA
 
 #include <cstring>
+#include <ncurses.h>
 #include <iostream>
 #include <string>
 #include <vector>
