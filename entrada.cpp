@@ -1,5 +1,6 @@
 #include "entrada.hpp"
 
+vector<int> eq_igual; 
 string __formato_certo(string exp){
 	string tmp;
 	bool flag = false;
@@ -47,11 +48,24 @@ pair<vector<vector<double>>, vector<double>> matriz_a_b(vector<string> exps, int
 				copy_numbers.push_back(exp[1][j]);
 			}
 		}
-		comp == '<' ? b.push_back(str_to_double(copy_numbers)) : b.push_back(-1 * str_to_double(copy_numbers));
+
+		int mult;
+		if(comp == '<'){
+			b.push_back(str_to_double(copy_numbers));
+			mult = 1;
+		}else if(comp == '>'){
+			b.push_back(-1 * str_to_double(copy_numbers));
+			mult = -1;
+		}else{
+			b.push_back(str_to_double(copy_numbers));
+			eq_igual.push_back(i);
+			mult = 1;
+		}
+		//comp == '<' ? b.push_back(str_to_double(copy_numbers)) : b.push_back(-1 * str_to_double(copy_numbers));
 		vector<double> aux = z_to_c(exp[0]);
 		for (auto num : aux)
 		{
-			A[i].push_back(num);
+			A[i].push_back(num * mult);
 			cnt++;
 		}
 		if (cnt < n)

@@ -15,5 +15,8 @@ double str_to_double(string str);
 double power(double val, int n);
 pair<vector<vector<double>>, vector<double>> matriz_a_b(vector<string> exps, int n);
 
+string __formato_certo(string exp);
+
+extern vector<int> eq_igual; // indice de qual expressao do s.a tem igual
 
 #endif
