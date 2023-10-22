@@ -1,4 +1,5 @@
 #include "entrada.hpp"
+#include "forma_padrao.hpp"
 using namespace std;
 
 extern vector<int> eq_igual; // indice de qual expressao do s.a tem igual
@@ -15,11 +16,12 @@ int main(){
 	cout << "\n";
 
     cout << "Test 2:\n";
+    const int n_variaveis = 4;
     vector<string> exps(3);
     exps[0] = "1x1 + 3x2<= 3";
     exps[1] = "-2x1 - 4x3 >= 4";
-    exps[2] = "x1 + x2 + x3 = 2";
-    pair<vector<vector<double>>, vector<double>> test2 = matriz_a_b(exps, 3);
+    exps[2] = "x1 + x2 + x3 + x4 = 2"; // BUG ARRUMAR: Se x1+x2+x3+x4=2 -> se o igual tiver colado ele some com a variavel
+    pair<vector<vector<double>>, vector<double>> test2 = matriz_a_b(exps, n_variaveis);
     for(auto it: test2.first){
         for(auto n: it){
             cout << n << " ";
@@ -34,5 +36,25 @@ int main(){
     for(auto it: eq_igual){
         cout << it << "\n";
     }
+
+    forma_padrao(test2, n_variaveis);
+
+    cout << "novo teste: \n\n\n";
+    eq_igual.clear();
+
+    vector<string> e(3);
+    e[0] = "x1 + 2x2 + 3x3 <= 3";
+    e[1] = "3x1 + 2x2 + x3 >= 2";
+    e[2] = "0.5x1 + 0.5x2 - 0.5x3 = 1";
+    pair<vector<vector<double>>, vector<double>> test3 = matriz_a_b(e, 3);
+    forma_padrao(test3, 3);
+
+
+    //eq_igual.push_back(10);
+    //eq_igual.push_back(23);
+    //for(int i=0; i<eq_igual.size(); ++i){
+    //    cout << "EQ: " << eq_igual[i] << "\n";
+    //}
+    //cout << (is_exp_igual(12) ? "YES\n" : "NO\n");
 	return 0;
 }

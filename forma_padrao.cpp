@@ -43,20 +43,55 @@ vector<vector<double>> forma_padrao(pair<vector<vector<double>>, vector<double>>
         aux++;
     }
 
+    //print antes das va
+    for(auto i: padrao){
+        for(auto j: i){
+            cout << j << " ";
+        }
+        cout << "\n";
+    }
     //adicionar variaveis artificiais
-    vector<int> va;
+    vector<pair<int, int>> va;
     int nn_variaveis = n_variaveis;
+    int linha = 0, max_linhas = 0;
+    for(auto exps: padrao) max_linhas++;
+
+    int tam_atual = padrao[0].size();
+    //cout << "tam atual: " <<  tam_atual << "\n";
     for(auto &exps: padrao){
+        bool add_va = true;
+        for(int i=0; i<tam_atual; ++i){
+            if(exps[i] == 1){
+                bool todos_sao_zero = true;
+                for(int j=0; j<max_linhas; ++j){
+                    if(j != linha){
+                        if(padrao[j][i] != 0){
+                            todos_sao_zero = false;
+                        }
+                    }
+                }
+                if(todos_sao_zero){
+                    add_va = false;
+                }
+            }
+            if(add_va == false) break;
+        }
+
         for(int i=0; i< nn_variaveis-n_variaveis; ++i){
             exps.push_back(0);
         }
-        if(!is_exp_igual(aux)){
+        cout << "linha : " << linha << " add_va : " << add_va << "\n";
+        if(add_va){
+            cout << "add_va na: " << linha << "\n";
             exps.push_back(1);
+            va.push_back({linha, nn_variaveis});
             nn_variaveis++;
         }
+        linha++;
     }
 
-    add = nn_variaveis-n_variaveis-1;
+    add = nn_variaveis-n_variaveis;
+    cout << "add : " << add << "\n";
     for(auto &exps: padrao){
         for(int i=0; i<add; ++i){
             exps.push_back(0);
@@ -70,7 +105,9 @@ vector<vector<double>> forma_padrao(pair<vector<vector<double>>, vector<double>>
         }
         cout << "\n";
     }
-
+    for(auto it: va){
+        cout << "va: " << it.first << " " << it.second << "\n";
+    }
     cout << "b:\n";
     for(auto it: m.second){
         cout << it << " ";
