@@ -60,6 +60,7 @@ void max_min() {
     vector<double> c_vector = z_to_c(str);	
     pair<vector<vector<double>>, vector<double>> matA_vetb = matriz_a_b(vetorDeStrings, variable_quantity);
     print_vector(c_vector, "C");
+    print_matrix(matA_vetb.first, "Matriz A");
     print_vector(matA_vetb.second, "b");
     vetorDeStrings.clear();
 }
