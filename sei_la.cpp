@@ -86,3 +86,21 @@ void print_vector(vector<double> v, const char *n) {
     getch();
     delete_line(stdscr, height/2);    
 }
+
+void print_matrix(vector<vector<double>> matA, const char *n) {
+    int width, height;
+    getmaxyx(stdscr, height, width);
+    clear();
+    mvprintw(height/2 - 1, width/2 - strlen(n), n);
+    int i=0, j=0;
+    int tam = matA[0].size();
+    for(const vector<double>& subvetor : matA) {
+        for(const double& elemento : subvetor) {
+            mvprintw(height/2 + i, (width/2 - (tam-1)*6) + 6*j, "%.2lf", matA[i][j]);
+            j++;
+        }
+        j=0;
+        i++;
+    }
+    getch();
+}
