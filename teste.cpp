@@ -21,6 +21,7 @@ int main(){
     exps[0] = "1x1 + 3x2<= 3";
     exps[1] = "-2x1 - 4x3 >= 4";
     exps[2] = "x1 + x2 + x3 + x4 = 2"; // BUG ARRUMAR: Se x1+x2+x3+x4=2 -> se o igual tiver colado ele some com a variavel
+    va.clear();
     pair<vector<vector<double>>, vector<double>> test2 = matriz_a_b(exps, n_variaveis);
     for(auto it: test2.first){
         for(auto n: it){
@@ -40,15 +41,21 @@ int main(){
     forma_padrao(test2, n_variaveis);
 
     cout << "novo teste: \n\n\n";
+    va.clear();
     eq_igual.clear();
 
     vector<string> e(3);
-    e[0] = "x1 + 2x2 + 3x3 <= 3";
-    e[1] = "3x1 + 2x2 + x3 >= 2";
-    e[2] = "0.5x1 + 0.5x2 - 0.5x3 = 1";
+    e[0] = "x1 + 2x2 + 3x3 >= 3";
+    e[1] = "3x1 + 2x2 + x3 >= -2.3";
+    e[2] = "-2x1 -2x2 - 2x3 = 1";
     pair<vector<vector<double>>, vector<double>> test3 = matriz_a_b(e, 3);
     forma_padrao(test3, 3);
-
+    for(auto it: test3.second){
+        cout << "SECOND:       " << it << "\n";
+    }
+    for(auto V: va){
+        cout << "VARIAVLE ARTIFICIAL linha: " << V.first << " coluna: " << V.second << "\n";
+    }
 
     //eq_igual.push_back(10);
     //eq_igual.push_back(23);

@@ -43,7 +43,7 @@ pair<vector<vector<double>>, vector<double>> matriz_a_b(vector<string> exps, int
 		string copy_numbers = "";
 		for (int j = 0; j < exp[1].length(); ++j)
 		{
-			if (exp[1][j] >= '0' && exp[1][j] <= '9' || exp[1][j] == '.')
+			if ((exp[1][j] >= '0' && exp[1][j] <= '9') || (exp[1][j] == '.') || (exp[1][j] == '-'))
 			{
 				copy_numbers.push_back(exp[1][j]);
 			}
@@ -54,6 +54,7 @@ pair<vector<vector<double>>, vector<double>> matriz_a_b(vector<string> exps, int
 			b.push_back(str_to_double(copy_numbers));
 			mult = 1;
 		}else if(comp == '>'){
+			//cout << "BBBBBBBBBBBBB: " << str_to_double(copy_numbers) << " : " << copy_numbers << "\n";
 			b.push_back(-1 * str_to_double(copy_numbers));
 			mult = -1;
 		}else{
@@ -77,6 +78,7 @@ pair<vector<vector<double>>, vector<double>> matriz_a_b(vector<string> exps, int
 		}
 		++i;
 	}
+
 	return {A, b};
 }
 

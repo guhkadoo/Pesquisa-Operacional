@@ -1,6 +1,7 @@
 #include "forma_padrao.hpp"
 
 extern vector<int> eq_igual;
+vector<pair<int, int>> va;
 
 vector<vector<double>> forma_padrao(pair<vector<vector<double>>, vector<double>> &m, int n){
     vector<vector<double>> padrao(m.second.size());
@@ -23,18 +24,28 @@ vector<vector<double>> forma_padrao(pair<vector<vector<double>>, vector<double>>
         aux++;
     } 
 
-    int add = n_variaveis-n-1;
+    // int add = n_variaveis-n-1;//TODO
+    // for(auto &exps: padrao){
+    //     for(int i=0; i<add; ++i){
+    //         exps.push_back(0);
+    //     }
+    //     add--;
+    // }
+    int add = n_variaveis;
     for(auto &exps: padrao){
-        for(int i=0; i<add; ++i){
+        int size_v = exps.size();
+        for(int i=0; i<add-size_v; ++i){
             exps.push_back(0);
         }
-        add--;
     }
 
     //inverter se b = 0
     aux = 0;
+    vector<int> add_va_maior_igual;
     for(auto &it: m.second){
+        cout << "it:          " << it << "\n";
         if(it < 0){
+            add_va_maior_igual.push_back(aux);
             it *= -1;
             for(auto &value: padrao[aux]){
                 value *= -1;
@@ -51,30 +62,35 @@ vector<vector<double>> forma_padrao(pair<vector<vector<double>>, vector<double>>
         cout << "\n";
     }
     //adicionar variaveis artificiais
-    vector<pair<int, int>> va;
+    //vector<pair<int, int>> va;
     int nn_variaveis = n_variaveis;
-    int linha = 0, max_linhas = 0;
-    for(auto exps: padrao) max_linhas++;
-
+    int linha = 0, max_linhas = aux;
     int tam_atual = padrao[0].size();
+
     //cout << "tam atual: " <<  tam_atual << "\n";
     for(auto &exps: padrao){
-        bool add_va = true;
-        for(int i=0; i<tam_atual; ++i){
-            if(exps[i] == 1){
-                bool todos_sao_zero = true;
-                for(int j=0; j<max_linhas; ++j){
-                    if(j != linha){
-                        if(padrao[j][i] != 0){
-                            todos_sao_zero = false;
-                        }
-                    }
-                }
-                if(todos_sao_zero){
-                    add_va = false;
-                }
-            }
-            if(add_va == false) break;
+        bool add_va = false;
+        // for(int i=0; i<tam_atual; ++i){
+        //     if(exps[i] == 1){
+        //         bool todos_sao_zero = true;
+        //         for(int j=0; j<max_linhas; ++j){
+        //             if(j != linha){
+        //                 if(padrao[j][i] != 0){
+        //                     todos_sao_zero = false;
+        //                 }
+        //             }
+        //         }
+        //         if(todos_sao_zero){
+        //             add_va = false;
+        //         }
+        //     }
+        //     if(add_va == false) break;
+        // }
+        for(int k=0; k<add_va_maior_igual.size(); ++k){
+            add_va |= (linha == add_va_maior_igual[k]);
+        }
+        for(auto k: eq_igual){
+            add_va |= (linha == k);
         }
 
         for(int i=0; i< nn_variaveis-n_variaveis; ++i){
@@ -90,13 +106,13 @@ vector<vector<double>> forma_padrao(pair<vector<vector<double>>, vector<double>>
         linha++;
     }
 
-    add = nn_variaveis-n_variaveis;
+    add = nn_variaveis;-n_variaveis;
     cout << "add : " << add << "\n";
     for(auto &exps: padrao){
-        for(int i=0; i<add; ++i){
+        int size_v = exps.size();
+        for(int i=0; i<add-size_v; ++i){
             exps.push_back(0);
         }
-        add--;
     }
     // printar teste
     for(auto i: padrao){

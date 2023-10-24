@@ -12,5 +12,6 @@ using namespace std;
 
 vector<vector<double>> forma_padrao(pair<vector<vector<double>>, vector<double>> &m, int n);
 bool is_exp_igual(int n);
+extern vector<pair<int, int>> va;
 
 #endif
