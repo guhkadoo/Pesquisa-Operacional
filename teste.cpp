@@ -47,14 +47,30 @@ int main(){
     vector<string> e(3);
     e[0] = "x1 + 2x2 + 3x3 >= 3";
     e[1] = "3x1 + 2x2 + x3 >= -2.3";
-    e[2] = "-2x1 -2x2 - 2x3 = 1";
+    e[2] = "-2x1 -2x2 - 2x3 <= 1";
     pair<vector<vector<double>>, vector<double>> test3 = matriz_a_b(e, 3);
-    forma_padrao(test3, 3);
+    test3.first = forma_padrao(test3, 3);
     for(auto it: test3.second){
         cout << "SECOND:       " << it << "\n";
     }
     for(auto V: va){
         cout << "VARIAVLE ARTIFICIAL linha: " << V.first << " coluna: " << V.second << "\n";
+    }
+
+    cout << "\n\n\n";
+    for(auto i: test3.first){
+        for(auto j: i){
+            cout << j << " ";
+        }
+        cout << "\n";
+    }
+    set<int> va = {};
+    test3.first = add_variavel_artificial(test3.first, va);
+    for(auto i: test3.first){
+        for(auto j: i){
+            cout << j << " ";
+        }
+        cout << "\n";
     }
 
     //eq_igual.push_back(10);

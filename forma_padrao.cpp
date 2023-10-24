@@ -3,6 +3,22 @@
 extern vector<int> eq_igual;
 vector<pair<int, int>> va;
 
+vector<vector<double>> add_variavel_artificial(vector<vector<double>> A, set<int> variaveis_livres){
+    int linhas = A.size(), colunas = A[0].size();
+    vector<vector<double>> novo_A(linhas);
+    cout << "VARIAVEIS ARTIFICIAIS FUNCAO\n";
+
+    for(int i=0; i<linhas; ++i){
+        for(int j=0; j<colunas; ++j){
+            novo_A[i].push_back(A[i][j]);
+            if(variaveis_livres.find(j+1) != variaveis_livres.end()){
+                novo_A[i].push_back(-1 * A[i][j]);
+            }
+        }
+    }
+    return novo_A;
+}
+
 vector<vector<double>> forma_padrao(pair<vector<vector<double>>, vector<double>> &m, int n){
     vector<vector<double>> padrao(m.second.size());
     cout << " FORMA PADRAO\n";
@@ -16,6 +32,7 @@ vector<vector<double>> forma_padrao(pair<vector<vector<double>>, vector<double>>
         for(int i=0; i< n_variaveis-n; ++i){
             padrao[aux].push_back(0);
         }
+
         if(!is_exp_igual(aux)){
             padrao[aux].push_back(1);
             n_variaveis++;
@@ -92,6 +109,7 @@ vector<vector<double>> forma_padrao(pair<vector<vector<double>>, vector<double>>
         for(auto k: eq_igual){
             add_va |= (linha == k);
         }
+        add_va = true;
 
         for(int i=0; i< nn_variaveis-n_variaveis; ++i){
             exps.push_back(0);
@@ -129,11 +147,14 @@ vector<vector<double>> forma_padrao(pair<vector<vector<double>>, vector<double>>
         cout << it << " ";
     }
     cout << "\n";
-    return m.first;
+    return padrao;
 }
 
 bool is_exp_igual(int n){
     int l=0, r = eq_igual.size();
+    if(r==0){
+        return false;
+    }
 
     while(l <= r){
         int m = (r+l)/2;
