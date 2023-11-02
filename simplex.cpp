@@ -51,6 +51,16 @@ vector<pair<double,double>> simplex(vector<vector<double>> matA, vector<double> 
         //cout << "MENOR CUSTO REDUZIDO: " << menor_cr.second << '\n'; //excluir
         if(menor_cr.second >= 0) {
             cout << "SOLUCAO\n";
+            //verificar se tem v.a artificial na base:
+            for(int i=0; i<numLinhas; i++) {
+                for(int j=1; j<=numLinhas; j++) {
+                    if(base[i] == numCols-j && base_c[i] != 0) {
+                        printf("SEM SOLUCAO\n");
+                        return 0;
+                    }
+                }
+                
+            }
             for(int i=0; i<qtd_variaveis; i++) {
                 int esta_na_base = 0, pos;
                 for(int j=0; j<numLinhas; j++) {
@@ -60,14 +70,8 @@ vector<pair<double,double>> simplex(vector<vector<double>> matA, vector<double> 
                         break;
                     }
                 }
-                if(esta_na_base) {
-                    //cout << "[X" << base[pos] << "] = " << b[pos] << "\n"; 
-                    solucao.push_back(make_pair(i+1, b[pos]));
-                }
-                else {
-                    //cout << "[X" << base[pos] << "] = 0\n";
-                    solucao.push_back(make_pair(i+1, 0));
-                }
+                if(esta_na_base) cout << "[X" << i << "] = " << b[pos] << "\n"; 
+                else cout << "[X" << i << "] = 0\n";
             }
             cout << "\n";
             break;
