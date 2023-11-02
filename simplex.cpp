@@ -56,7 +56,7 @@ vector<pair<double,double>> simplex(vector<vector<double>> matA, vector<double> 
                 for(int j=1; j<=numLinhas; j++) {
                     if(base[i] == numCols-j && base_c[i] != 0) {
                         printf("SEM SOLUCAO\n");
-                        return 0;
+                        return solucao;
                     }
                 }
                 
